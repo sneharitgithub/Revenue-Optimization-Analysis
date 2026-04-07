@@ -29,3 +29,14 @@ SELECT
 FROM ecommerce_dataset_updated
 GROUP BY Payment_Method
 ORDER BY usage_count DESC;
+
+-- 7. Discount Impact
+SELECT 
+    `Discount (%)`,
+    AVG(`Final_Price(Rs.)`) AS avg_revenue
+FROM ecommerce_dataset_updated
+GROUP BY `Discount (%)`
+ORDER BY `Discount (%)`;
+
+
+

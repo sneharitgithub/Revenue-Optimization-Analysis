@@ -4,11 +4,10 @@
 -- 1. Sales trend over time (Monthly)
 SELECT 
     DATE_FORMAT(Purchase_Date_Clean, '%Y-%m') AS month,
-    SUM(`Final_Price(Rs.)`) AS monthly_revenue
+    SUM(`Final_Price(Rs.)`) AS revenue
 FROM ecommerce_dataset_updated
 GROUP BY month
 ORDER BY month;
-
 -- 2. Revenue by category
 SELECT 
     Category,
@@ -59,4 +58,30 @@ FROM ecommerce_dataset_updated
 GROUP BY User_ID
 HAVING COUNT(*) > 1
 ORDER BY order_count DESC;
+
+-- 8. % contribution by category
+SELECT 
+    Category,
+    SUM(`Final_Price(Rs.)`) AS revenue,
+    ROUND(
+        (SUM(`Final_Price(Rs.)`) / 
+        (SELECT SUM(`Final_Price(Rs.)`) FROM ecommerce_dataset_updated)) * 100, 2
+    ) AS contribution_percent
+FROM ecommerce_dataset_updated
+GROUP BY Category
+ORDER BY revenue DESC;
+
+-- 9. Payment Method Analysis
+SELECT 
+    Payment_Method,
+    COUNT(*) AS orders,
+    SUM(`Final_Price(Rs.)`) AS revenue
+FROM ecommerce_dataset_updated
+GROUP BY Payment_Method
+ORDER BY revenue DESC;
+
+
+
+
+
 
